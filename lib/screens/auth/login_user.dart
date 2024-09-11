@@ -1,6 +1,7 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:flutter_application_1/screens/auth/verify_otp_screen.dart';
 
 class LoginUser extends StatefulWidget {
   const LoginUser({super.key});
@@ -68,14 +69,14 @@ class _LoginUserState extends State<LoginUser> {
                 ),
                 child: Row(
                   children: [
-                    // CountryCodePicker(
-                    //     // initialSelection: '+855',
-                    //     // favorite: const ['+855', 'KH'],
-                    //     // showFlag: true,
-                    //     // textStyle: const TextStyle(
-                    //     //   color: Colors.black,
-                    //     // ),
-                    //     ),
+                    const CountryCodePicker(
+                      initialSelection: '+855',
+                      favorite: ['+855', 'KH'],
+                      showFlag: true,
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                     Expanded(
                       child: TextField(
                         keyboardType: TextInputType.number,
@@ -105,7 +106,7 @@ class _LoginUserState extends State<LoginUser> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => const VerifyOtpScreen()));
                 },
                 child: const Text(
                   'Sign in',

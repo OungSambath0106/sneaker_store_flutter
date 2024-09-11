@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
 import 'package:flutter_application_1/menu/about_us.dart';
 import 'package:flutter_application_1/menu/contact_us.dart';
-import 'package:flutter_application_1/screens/login_user.dart';
-import 'package:flutter_application_1/screens/onboarding_screen.dart';
+import 'package:flutter_application_1/screens/onboard_screen/onboarding_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});

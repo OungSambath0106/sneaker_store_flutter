@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
 import 'package:flutter_application_1/menu/navigation_menu.dart';
 import 'package:flutter_application_1/screens/favorite_screen.dart';
+import 'package:flutter_application_1/screens/home_screen/home_sreen.dart';
 import 'package:flutter_application_1/screens/new_order_screen.dart';
 import 'package:flutter_application_1/screens/popular_screen.dart';
-import 'package:flutter_application_1/screens/sneaker_screen/sneaker_sreen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   final List<String> imgList = [
     'assets/images/banner1.png',
     'assets/images/banner2.png',
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (title == 'Sneaker') {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SneakerSreen()),
+                MaterialPageRoute(builder: (context) => const HomeSreen()),
               );
             }
           },

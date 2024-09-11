@@ -2,14 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
 import 'package:flutter_application_1/menu/navigation_menu.dart';
-import 'package:flutter_application_1/screens/sneaker_screen/category/adidas_screen.dart';
-import 'package:flutter_application_1/screens/sneaker_screen/category/nike_screen.dart';
+import 'package:flutter_application_1/screens/home_screen/category/adidas_screen.dart';
+import 'package:flutter_application_1/screens/home_screen/category/nike_screen.dart';
 
-class SneakerSreen extends StatefulWidget {
-  const SneakerSreen({super.key});
+class HomeSreen extends StatefulWidget {
+  const HomeSreen({super.key});
 
   @override
-  State<SneakerSreen> createState() => _SneakerSreenState();
+  State<HomeSreen> createState() => _HomeSreenState();
 }
 
 //Class for Popular Product
@@ -46,13 +46,13 @@ class BestSellingProduct {
   });
 }
 
-class _SneakerSreenState extends State<SneakerSreen> {
+class _HomeSreenState extends State<HomeSreen> {
   bool isSearchActive = false;
   TextEditingController searchController = TextEditingController();
 
-  final List<bool> _bestSelling = List.generate(6, (_) => false);
+  // final List<bool> _bestSelling = List.generate(6, (_) => false);
   final List<bool> _newArrival = List.generate(6, (_) => false);
-  final List<bool> _popularFavorite = List.generate(6, (_) => false);
+  // final List<bool> _popularFavorite = List.generate(6, (_) => false);
 
   final List<String> imgList = [
     'assets/images/banner1.png',
@@ -364,7 +364,7 @@ class _SneakerSreenState extends State<SneakerSreen> {
                 break;
               // Add more cases for other categories
               default:
-                destinationScreen = const SneakerSreen(); // Fallback screen
+                destinationScreen = const HomeSreen(); // Fallback screen
             }
 
             return CategoryItem(

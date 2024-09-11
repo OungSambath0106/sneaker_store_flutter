@@ -1,7 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/screens/sneaker_screen/sneaker_sreen.dart';
+import 'package:flutter_application_1/screens/auth/login_user.dart';
 
 void main() {
   // className objectName = constructorName([parameter_list]);
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Login User',
       // home: const LoginUser(),
-      home: const SneakerSreen(),
+      home: const LoginUser(),
       theme: ThemeData.light().copyWith(
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.blue,
