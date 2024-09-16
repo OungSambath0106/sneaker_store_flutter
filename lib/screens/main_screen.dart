@@ -16,9 +16,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final List<String> imgList = [
-    'assets/images/banner1.png',
-    'assets/images/banner2.png',
-    'assets/images/banner3.png',
+    'assets/banners/banner1.png',
+    'assets/banners/banner2.png',
+    'assets/banners/banner3.png',
+    'assets/banners/banner4.png',
+    'assets/banners/banner5.png',
   ];
 
   @override

@@ -40,6 +40,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   device_preview: ^1.2.0
   country_code_picker: ^3.0.0
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -65,8 +66,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
+    - assets/banners/
+    - assets/categories/
     - assets/icons/
+    - assets/images/
+    - assets/products/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

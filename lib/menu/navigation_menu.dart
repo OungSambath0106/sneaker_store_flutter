@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
-import 'package:flutter_application_1/menu/about_us.dart';
 import 'package:flutter_application_1/menu/contact_us.dart';
 import 'package:flutter_application_1/screens/onboard_screen/onboarding_screen.dart';
+import 'package:flutter_application_1/screens/profile/about_us.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -34,7 +34,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AboutUs(),
+                  builder: (context) => const AboutScreen(),
                 ),
               );
             },

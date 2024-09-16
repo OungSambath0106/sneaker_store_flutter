@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/screens/main_screen.dart';
+import 'package:flutter_application_1/screens/dashboard/dashboard.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
@@ -89,7 +89,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MainScreen()),
+                            builder: (context) => const Dashboard()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

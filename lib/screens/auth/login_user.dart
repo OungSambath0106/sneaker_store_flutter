@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/screens/auth/verify_otp_screen.dart';
 
 class LoginUser extends StatefulWidget {
@@ -14,7 +15,7 @@ class _LoginUserState extends State<LoginUser> {
   bool ispassword = true;
   final FocusNode _usernameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
-  TextEditingController controllerUsername = TextEditingController();
+  TextEditingController controllerPhoneNumber = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
   void toggle_password() {
@@ -30,11 +31,15 @@ class _LoginUserState extends State<LoginUser> {
     super.dispose();
   }
 
+  final _keyForm = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
+      body: Form(
+        key: _keyForm,
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -60,16 +65,45 @@ class _LoginUserState extends State<LoginUser> {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey[200],
-                ),
-                child: Row(
-                  children: [
-                    const CountryCodePicker(
+
+              TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Required Phone Number';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
+                  hintText: 'Phone number',
+                  prefixIcon: const SizedBox(
+                    child: CountryCodePicker(
                       initialSelection: '+855',
                       favorite: ['+855', 'KH'],
                       showFlag: true,
@@ -77,23 +111,11 @@ class _LoginUserState extends State<LoginUser> {
                         color: Colors.black,
                       ),
                     ),
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Phone number',
-                          hintStyle: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 20),
+
+              const SizedBox(height: 15),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF683212),
@@ -103,10 +125,21 @@ class _LoginUserState extends State<LoginUser> {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  if (_keyForm.currentState!.validate()) {
+                    String strNumber = controllerPhoneNumber.text;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("PhoneNumber: $strNumber"),
+                      ),
+                    );
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const VerifyOtpScreen()));
+                        builder: (context) => const VerifyOtpScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  }
                 },
                 child: const Text(
                   'Sign in',
@@ -151,7 +184,9 @@ class _LoginUserState extends State<LoginUser> {
                 iconColor: Colors.white,
               ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

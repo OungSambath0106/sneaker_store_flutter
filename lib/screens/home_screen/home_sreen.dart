@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
-import 'package:flutter_application_1/menu/navigation_menu.dart';
+import 'package:flutter_application_1/model/model_product.dart';
 import 'package:flutter_application_1/screens/home_screen/category/adidas_screen.dart';
 import 'package:flutter_application_1/screens/home_screen/category/nike_screen.dart';
+import 'package:flutter_application_1/screens/product/product_detail.dart';
 
 class HomeSreen extends StatefulWidget {
   const HomeSreen({super.key});
@@ -27,25 +28,6 @@ class Product {
   });
 }
 
-//Class for Best Selling Product
-class BestSellingProduct {
-  final String imagePath;
-  final String brand;
-  final String name;
-  final String size;
-  final double price;
-  bool isFavorite;
-
-  BestSellingProduct({
-    required this.imagePath,
-    required this.brand,
-    required this.name,
-    required this.size,
-    required this.price,
-    this.isFavorite = false,
-  });
-}
-
 class _HomeSreenState extends State<HomeSreen> {
   bool isSearchActive = false;
   TextEditingController searchController = TextEditingController();
@@ -55,146 +37,148 @@ class _HomeSreenState extends State<HomeSreen> {
   // final List<bool> _popularFavorite = List.generate(6, (_) => false);
 
   final List<String> imgList = [
-    'assets/images/banner1.png',
-    'assets/images/banner2.png',
-    'assets/images/banner3.png',
+    'assets/banners/banner1.png',
+    'assets/banners/banner2.png',
+    'assets/banners/banner3.png',
+    'assets/banners/banner4.png',
+    'assets/banners/banner5.png',
   ];
 
   final List<Map<String, dynamic>> categories = [
-    {'image': 'assets/images/nike.png', 'label': 'NIKE'},
-    {'image': 'assets/images/adidas.png', 'label': 'ADIDAS'},
-    {'image': 'assets/images/nb.png', 'label': 'NEW BALANCE'},
-    {'image': 'assets/images/vans.png', 'label': 'VANS'},
-    {'image': 'assets/images/puma.png', 'label': 'PUMA'},
+    {'image': 'assets/categories/nike.png', 'label': 'NIKE'},
+    {'image': 'assets/categories/adidas.png', 'label': 'ADIDAS'},
+    {'image': 'assets/categories/nb.png', 'label': 'NEW BALANCE'},
+    {'image': 'assets/categories/vans.png', 'label': 'VANS'},
+    {'image': 'assets/categories/puma.png', 'label': 'PUMA'},
   ];
 
   //set values for Popular Product
   final List<Product> products = [
     Product(
-      imagePath: 'assets/images/nikeshoes1.png',
+      imagePath: 'assets/products/nikeshoes1.png',
       name: 'Nike Air Jordan',
-      price: 799.00,
-      originalPrice: 899.00,
+      price: 799.99,
+      originalPrice: 899.99,
     ),
     Product(
-      imagePath: 'assets/images/nikeshoes2.png',
+      imagePath: 'assets/products/nikeshoes2.png',
       name: 'Nike Air Jordan',
-      price: 799.00,
-      originalPrice: 899.00,
+      price: 799.99,
+      originalPrice: 899.99,
     ),
     Product(
-      imagePath: 'assets/images/adidas3.png',
+      imagePath: 'assets/products/adidas3.png',
       name: 'Adidas',
-      price: 799.00,
-      originalPrice: 899.00,
+      price: 799.99,
+      originalPrice: 899.99,
     ),
     Product(
-      imagePath: 'assets/images/adidas4.png',
+      imagePath: 'assets/products/adidas4.png',
       name: 'Adidas',
-      price: 799.00,
-      originalPrice: 899.00,
+      price: 799.99,
+      originalPrice: 899.99,
     ),
   ];
 
   //set values for Best Selling
   final List<BestSellingProduct> _bestsellingproducts = [
-    BestSellingProduct(
-      imagePath: 'assets/images/nikeshoes1.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/nikeshoes1.png',
       brand: 'Nike',
       name: 'Jordan 1 Retro High Off-White University Blue',
       size: '42',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/nikeshoes2.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/nikeshoes2.png',
       brand: 'Nike',
       name: 'Jordan 1 Retro High Off-White Chicago',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/adidas5.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/adidas5.png',
       brand: 'Adidas',
       name: 'adidas EQT Running Guidance',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/nikeshoes3.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/nikeshoes3.png',
       brand: 'Nike',
       name: 'Nike Dunk Low Pro SB',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/adidas1.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/adidas1.png',
       brand: 'Adidas',
       name: 'Yeezy Boost 350 V2',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/nikeshoes4.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/nikeshoes4.png',
       brand: 'Nike',
       name: 'Air Jordan 1 Retro Black Toe',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/nikeshoes7.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/nikeshoes7.png',
       brand: 'Nike',
       name: 'Air Jordan 1 Retro High Off-White NRG',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/adidas2.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/adidas2.png',
       brand: 'Adidas',
       name: 'Adidas EQT Support ADV Primeknit Turbo',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/nikeshoes8.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/nikeshoes8.png',
       brand: 'Nike',
       name: 'Nike Air Jordan 1 "Shattered Backboard 1.0"',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/adidas3.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/adidas3.png',
       brand: 'Adidas',
       name: 'adidas Barricade 2016 XJ Unisex Baby Trainers',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/nikeshoes5.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/nikeshoes5.png',
       brand: 'Nike',
       name: 'Nike Air Force 1 Low Stars White Black',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/adidas4.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/adidas4.png',
       brand: 'Adidas',
       name: 'YEEZY BOOST 700 "Waverunner"',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/nikeshoes6.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/nikeshoes6.png',
       brand: 'Nike',
       name: 'Nike Dunk Low Celtic (2004)',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
-    BestSellingProduct(
-      imagePath: 'assets/images/adidas6.png',
+    BestSellingProducts(
+      imagePath: 'assets/products/adidas6.png',
       brand: 'Adidas',
       name: 'Adidas NMD_XR1 Primeknit Clear Granite W',
       size: '40',
-      price: 799.0,
+      price: 799.99,
     ),
   ];
 
@@ -207,6 +191,15 @@ class _HomeSreenState extends State<HomeSreen> {
     searchController.addListener(() {
       _filterProducts(searchController.text);
     });
+  }
+
+  void _navigateToProductDetail(BestSellingProduct product) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductDetail(product: product),
+      ),
+    );
   }
 
   void _filterProducts(String query) {
@@ -249,7 +242,7 @@ class _HomeSreenState extends State<HomeSreen> {
         ],
         iconTheme: const IconThemeData(color: AppColors.icon),
       ),
-      drawer: const NavigationMenu(),
+      // drawer: const NavigationMenu(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -404,97 +397,101 @@ class _HomeSreenState extends State<HomeSreen> {
       itemBuilder: (context, index) {
         final product = _filteredProducts[index]; // Use filtered products
 
-        return Container(
-          margin: const EdgeInsets.all(0.0),
-          child: Card(
-            color: Colors.white,
-            child: Stack(
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: SizedBox(
-                        width: 200,
-                        height: 90,
-                        child: Image.asset(
-                          product.imagePath,
-                          fit: BoxFit.contain,
+        return GestureDetector(
+          onTap: () => _navigateToProductDetail(product),
+          child: Container(
+            margin: const EdgeInsets.all(0.0),
+            child: Card(
+              color: Colors.white,
+              child: Stack(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: SizedBox(
+                          width: 200,
+                          height: 90,
+                          child: Image.asset(
+                            product.imagePath,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(15.0, 5.0, 12.0, 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            product.brand,
-                            style: const TextStyle(
-                              color: Colors.grey,
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(15.0, 5.0, 12.0, 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              product.brand,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          Text(
-                            product.name,
-                            style: const TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
+                            Text(
+                              product.name,
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                              ),
+                              overflow: TextOverflow
+                                  .ellipsis, // Adds an ellipsis when the text overflows
+                              maxLines: 1, // Limits the text to a single line
                             ),
-                            overflow: TextOverflow
-                                .ellipsis, // Adds an ellipsis when the text overflows
-                            maxLines: 1, // Limits the text to a single line
-                          ),
-                          Text(
-                            'Size: ${product.size}',
-                            style: const TextStyle(
-                              color: Colors.grey,
+                            Text(
+                              'Size: ${product.size}',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Text(
-                        '\$${product.price}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 20.0,
+                          ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  top: 8.0,
-                  right: 12.0,
-                  child: IconButton(
-                    icon: Icon(
-                      product.isFavorite
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: product.isFavorite ? Colors.red : Colors.grey,
-                    ),
-                    onPressed: () {
-                      _toggleBestSellingFavorite(index);
-                    },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Text(
+                          '\$${product.price}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Positioned(
-                  right: 12.0,
-                  bottom: 5.0,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.shopping_cart,
-                      color: Colors.black,
+                  Positioned(
+                    top: 8.0,
+                    right: 12.0,
+                    child: IconButton(
+                      icon: Icon(
+                        product.isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: product.isFavorite ? Colors.red : Colors.grey,
+                      ),
+                      onPressed: () {
+                        _toggleBestSellingFavorite(index);
+                      },
                     ),
-                    onPressed: () {},
                   ),
-                ),
-              ],
+                  Positioned(
+                    right: 12.0,
+                    bottom: 5.0,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.shopping_cart,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
