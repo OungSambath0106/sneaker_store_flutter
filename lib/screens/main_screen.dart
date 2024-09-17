@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
 import 'package:flutter_application_1/menu/navigation_menu.dart';
-import 'package:flutter_application_1/screens/favorite_screen.dart';
+import 'package:flutter_application_1/screens/Favorite/favorite_screen.dart';
 import 'package:flutter_application_1/screens/home_screen/home_sreen.dart';
 import 'package:flutter_application_1/screens/new_order_screen.dart';
 import 'package:flutter_application_1/screens/popular_screen.dart';
@@ -94,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FavoriteScreen(),
+                      builder: (context) => const WishlistScreen(),
                     ),
                   );
                   break;

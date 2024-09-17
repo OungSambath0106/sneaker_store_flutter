@@ -31,6 +31,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
         iconTheme: const IconThemeData(color: AppColors.icon),
       ),
       body: Container(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 30),
         color: AppColors.bgColor,
         child: ListView.builder(
           padding: EdgeInsets.zero,

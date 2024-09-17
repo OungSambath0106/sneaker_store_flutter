@@ -27,10 +27,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: AppColors.primary,
         elevation: 0,
         title: const Text(
-          "My Profile",
+          "Profile",
           style: TextStyle(color: AppColors.icon),
         ),
         centerTitle: true,
+        iconTheme: const IconThemeData(color: AppColors.icon),
       ),
       body: Container(
         color: AppColors.bgColor,
@@ -196,6 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ListTile(
           leading: Image.asset(
             'assets/icons/privacy.png',
+            color: Colors.brown[800],
             width: 25.0,
             height: 25.0,
           ),
