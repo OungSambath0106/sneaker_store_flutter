@@ -231,7 +231,7 @@ class _HomeSreenState extends State<HomeSreen> {
         scrolledUnderElevation: 0,
         backgroundColor: AppColors.primary,
         title: const Text(
-          'BEFREE STORE',
+          'THE SNEAKER',
           style: TextStyle(color: AppColors.icon),
         ),
         actions: [

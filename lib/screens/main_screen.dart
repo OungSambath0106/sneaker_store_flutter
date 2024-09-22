@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
         scrolledUnderElevation: 0,
         backgroundColor: AppColors.primary,
         title: const Text(
-          'BEFREE STORE',
+          'THE SNEAKER',
           style: TextStyle(color: AppColors.icon),
         ),
         actions: <Widget>[

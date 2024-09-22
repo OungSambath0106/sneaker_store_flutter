@@ -59,7 +59,7 @@ class _ProductDetailState extends State<ProductDetail>
                 product.imagePath,
                 width: MediaQuery.of(context).size.width - 40,
                 height: MediaQuery.of(context).size.width * 0.8 - 40,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
             ),
             Padding(
