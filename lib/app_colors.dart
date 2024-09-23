@@ -7,5 +7,6 @@ class AppColors {
   static const icon = Colors.brown;
   static const profile = Colors.brown;
   static const iconnavigationbar = Colors.brown;
+  static const topNavigationbar = Color.fromARGB(255, 255, 255, 255);
   static const navigationbar = Color.fromARGB(255, 235, 235, 235);
 }

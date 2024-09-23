@@ -4,7 +4,8 @@ abstract class BestSellingProduct {
   String get brand;
   String get name;
   String get size;
-  double get price;
+  double get discountprice;
+  double get originalprice;
   bool get isFavorite;
   set isFavorite(bool value);
 }
@@ -19,7 +20,9 @@ class BestSellingProducts implements BestSellingProduct {
   @override
   final String size;
   @override
-  final double price;
+  final double discountprice;
+  @override
+  final double originalprice;
   bool _isFavorite;
 
   BestSellingProducts({
@@ -27,7 +30,8 @@ class BestSellingProducts implements BestSellingProduct {
     required this.brand,
     required this.name,
     required this.size,
-    required this.price,
+    required this.discountprice,
+    required this.originalprice,
     bool isFavorite = false,
   }) : _isFavorite = isFavorite;
 

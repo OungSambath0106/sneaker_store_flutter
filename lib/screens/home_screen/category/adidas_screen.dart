@@ -22,51 +22,64 @@ class _AdidasScreenState extends State<AdidasScreen> {
       brand: 'Adidas',
       name: 'Yeezy Boost 350 V2',
       size: '42',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas2.png',
       brand: 'Adidas',
       name: 'Adidas EQT Support ADV Primeknit Turbo',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas3.png',
       brand: 'Adidas',
       name: 'adidas Barricade 2016 XJ Unisex Baby Trainers',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas4.png',
       brand: 'Adidas',
       name: 'YEEZY BOOST 700 "Waverunner"',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas5.png',
       brand: 'Adidas',
       name: 'adidas EQT Running Guidance',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas6.png',
       brand: 'Adidas',
       name: 'Adidas NMD_XR1 Primeknit Clear Granite W',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
   ];
+
+  late List<BestSellingProduct> _relatedProducts;
 
   List<BestSellingProduct> _filteredProducts = [];
 
   @override
   void initState() {
     super.initState();
+    _relatedProducts = _bestsellingProducts.where((product) {
+      return product.brand == 'Adidas';
+    }).toList();
+
     _filteredProducts = _bestsellingProducts;
+
     searchController.addListener(() {
       _filterProducts(searchController.text);
     });
@@ -76,7 +89,10 @@ class _AdidasScreenState extends State<AdidasScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProductDetail(product: product),
+        builder: (context) => ProductDetail(
+          product: product,
+          relatedProducts: _relatedProducts,
+        ),
       ),
     );
   }
@@ -104,7 +120,7 @@ class _AdidasScreenState extends State<AdidasScreen> {
         scrolledUnderElevation: 0,
         backgroundColor: AppColors.primary,
         title: const Text(
-          'Adidas BRAND',
+          'ADIDAS BRAND',
           style: TextStyle(color: AppColors.icon),
         ),
         actions: [
@@ -173,7 +189,7 @@ class _AdidasScreenState extends State<AdidasScreen> {
         crossAxisCount: 2,
         crossAxisSpacing: 10.0,
         mainAxisSpacing: 10.0,
-        childAspectRatio: 0.75,
+        childAspectRatio: 0.74,
       ),
       itemCount: _filteredProducts.length,
       shrinkWrap: true,
@@ -225,23 +241,28 @@ class _AdidasScreenState extends State<AdidasScreen> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
-                            Text(
-                              'Size: ${product.size}',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                              ),
-                            ),
                           ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
-                          '\$${product.price}',
+                          '\$${product.discountprice}',
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w900,
                             fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Text(
+                          '\$${product.originalprice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.grey,
                           ),
                         ),
                       ),

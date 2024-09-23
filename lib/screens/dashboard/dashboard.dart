@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
-import 'package:flutter_application_1/screens/main_screen.dart';
+import 'package:flutter_application_1/screens/home_screen/home_sreen.dart';
 import 'package:flutter_application_1/screens/notification/notification.dart';
 import 'package:flutter_application_1/screens/order/order.dart';
 import 'package:flutter_application_1/screens/profile/profile.dart';
@@ -21,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
 
   // Define your screens here
   final List<Widget> _screens = [
-    const MainScreen(),
+    const HomeSreen(),
     const OrderHistoryScreen(),
     const NotificationScreen(),
     const ProfileScreen(),
@@ -31,7 +31,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.transparent,
-      body: isLoggedIn ? _screens[_currentIndex] : const MainScreen(),
+      body: isLoggedIn ? _screens[_currentIndex] : const HomeSreen(),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: AppColors.bgColor,
         color: AppColors.navigationbar,

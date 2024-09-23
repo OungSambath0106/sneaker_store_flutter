@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
+import 'package:flutter_application_1/menu/navigation_menu.dart';
 import 'package:flutter_application_1/model/model_product.dart';
 import 'package:flutter_application_1/screens/home_screen/category/adidas_screen.dart';
 import 'package:flutter_application_1/screens/home_screen/category/nike_screen.dart';
+import 'package:flutter_application_1/screens/notification/notification.dart';
 import 'package:flutter_application_1/screens/product/product_detail.dart';
+import 'package:flutter_application_1/screens/scan_qrcode/scan_qrcode_screen.dart';
 
 class HomeSreen extends StatefulWidget {
   const HomeSreen({super.key});
@@ -87,107 +90,128 @@ class _HomeSreenState extends State<HomeSreen> {
       brand: 'Nike',
       name: 'Jordan 1 Retro High Off-White University Blue',
       size: '42',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes2.png',
       brand: 'Nike',
       name: 'Jordan 1 Retro High Off-White Chicago',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas5.png',
       brand: 'Adidas',
       name: 'adidas EQT Running Guidance',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes3.png',
       brand: 'Nike',
       name: 'Nike Dunk Low Pro SB',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas1.png',
       brand: 'Adidas',
       name: 'Yeezy Boost 350 V2',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes4.png',
       brand: 'Nike',
       name: 'Air Jordan 1 Retro Black Toe',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes7.png',
       brand: 'Nike',
       name: 'Air Jordan 1 Retro High Off-White NRG',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas2.png',
       brand: 'Adidas',
       name: 'Adidas EQT Support ADV Primeknit Turbo',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes8.png',
       brand: 'Nike',
       name: 'Nike Air Jordan 1 "Shattered Backboard 1.0"',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas3.png',
       brand: 'Adidas',
       name: 'adidas Barricade 2016 XJ Unisex Baby Trainers',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes5.png',
       brand: 'Nike',
       name: 'Nike Air Force 1 Low Stars White Black',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas4.png',
       brand: 'Adidas',
       name: 'YEEZY BOOST 700 "Waverunner"',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes6.png',
       brand: 'Nike',
       name: 'Nike Dunk Low Celtic (2004)',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas6.png',
       brand: 'Adidas',
       name: 'Adidas NMD_XR1 Primeknit Clear Granite W',
       size: '40',
-      price: 799.99,
+      discountprice: 799.99,
+      originalprice: 899.99,
     ),
   ];
+
+  late List<BestSellingProduct> _relatedProducts;
 
   List<BestSellingProduct> _filteredProducts = [];
 
   @override
   void initState() {
     super.initState();
-    _filteredProducts = _bestsellingproducts;
+    _relatedProducts = _bestsellingproducts.where((product) {
+      return product.brand == 'Nike' || product.brand == 'Adidas';
+    }).toList();
+
+    _filteredProducts = _bestsellingproducts; // Corrected here
+
     searchController.addListener(() {
       _filterProducts(searchController.text);
     });
@@ -197,7 +221,10 @@ class _HomeSreenState extends State<HomeSreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProductDetail(product: product),
+        builder: (context) => ProductDetail(
+          product: product,
+          relatedProducts: _relatedProducts, // Ensure this is defined
+        ),
       ),
     );
   }
@@ -229,19 +256,41 @@ class _HomeSreenState extends State<HomeSreen> {
       backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.topNavigationbar,
         title: const Text(
           'THE SNEAKER',
           style: TextStyle(color: AppColors.icon),
         ),
-        actions: [
+        actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.shopping_basket_sharp),
-            onPressed: () {},
+            icon: const Icon(Icons.qr_code),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScanQrcodeScreen(),
+                ),
+              );
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: const Icon(Icons.notifications),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationScreen(),
+                  ),
+                );
+              },
+            ),
           ),
         ],
         iconTheme: const IconThemeData(color: AppColors.icon),
       ),
+      drawer: const NavigationMenu(),
       // drawer: const NavigationMenu(),
       body: SingleChildScrollView(
         child: Padding(
@@ -389,7 +438,7 @@ class _HomeSreenState extends State<HomeSreen> {
         crossAxisCount: 2,
         crossAxisSpacing: 10.0,
         mainAxisSpacing: 10.0,
-        childAspectRatio: 0.75, // Adjust if needed
+        childAspectRatio: 0.74, // Adjust if needed
       ),
       itemCount: _filteredProducts.length,
       shrinkWrap: true,
@@ -442,23 +491,34 @@ class _HomeSreenState extends State<HomeSreen> {
                                   .ellipsis, // Adds an ellipsis when the text overflows
                               maxLines: 1, // Limits the text to a single line
                             ),
-                            Text(
-                              'Size: ${product.size}',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                              ),
-                            ),
+                            // Text(
+                            //   'Size: ${product.size}',
+                            //   style: const TextStyle(
+                            //     color: Colors.grey,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
-                          '\$${product.price}',
+                          '\$${product.discountprice}',
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w900,
                             fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Text(
+                          '\$${product.originalprice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.grey,
                           ),
                         ),
                       ),

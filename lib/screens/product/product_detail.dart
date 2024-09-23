@@ -4,8 +4,14 @@ import 'package:flutter_application_1/model/model_product.dart';
 
 class ProductDetail extends StatefulWidget {
   final BestSellingProduct product;
+  final List<BestSellingProduct> relatedProducts;
 
-  const ProductDetail({super.key, required this.product});
+  // const ProductDetail({super.key, required this.product});
+  const ProductDetail({
+    Key? key,
+    required this.product,
+    required this.relatedProducts,
+  }) : super(key: key);
 
   @override
   State<ProductDetail> createState() => _ProductDetailState();
@@ -33,6 +39,7 @@ class _ProductDetailState extends State<ProductDetail>
     final product = widget.product;
 
     return Scaffold(
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(
@@ -54,11 +61,11 @@ class _ProductDetailState extends State<ProductDetail>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(5.0),
               child: Image.asset(
                 product.imagePath,
-                width: MediaQuery.of(context).size.width - 40,
-                height: MediaQuery.of(context).size.width * 0.8 - 40,
+                width: MediaQuery.of(context).size.width - 10,
+                height: MediaQuery.of(context).size.width * 0.6,
                 fit: BoxFit.contain,
               ),
             ),
@@ -111,7 +118,7 @@ class _ProductDetailState extends State<ProductDetail>
               child: Row(
                 children: [
                   Text(
-                    "\$${product.price}",
+                    "\$${product.discountprice}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -119,9 +126,9 @@ class _ProductDetailState extends State<ProductDetail>
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Text(
-                    "\$999.00",
-                    style: TextStyle(
+                  Text(
+                    "\$${product.originalprice}",
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.red,
                       decoration: TextDecoration.lineThrough,
@@ -146,57 +153,46 @@ class _ProductDetailState extends State<ProductDetail>
               ),
             ),
             const SizedBox(height: 20),
-            SizedBox(
-              height: MediaQuery.of(context).size.height *
-                  0.4, // Adjust height as needed
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Select Size',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            _buildSizeSelector(),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text(
-                            "Welcome to dinoclaire.my shop! We provide the best service and the best beauty products. Wholesale please. Welcome to dinoclaire. my shop! We provide the best service and the best beauty products. Wholesale please. See more",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        _buildSectionTitle('Related Products', () {}),
-                        const SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          // Add related products here
-                        )
-                      ],
+            // Integrate TabBarView content here
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 12,
+                  ),
+                  child: Text(
+                    'Select Size',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ],
-              ),
+                ),
+                _buildSizeSelector(),
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    "Welcome to dinoclaire.my shop! We provide the best service and the best beauty products. Wholesale please. Welcome to dinoclaire. my shop! We provide the best service and the best beauty products. Wholesale please. See more",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                _buildSectionTitle('Related Products', () {}),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child:
+                      _buildRelatedProductsRow(), // Wrap the widget in `child:`
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 25),
+              padding: const EdgeInsets.fromLTRB(17, 15, 17, 32),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width / 8,
@@ -287,6 +283,130 @@ class _ProductDetailState extends State<ProductDetail>
           return _buildSizeOption(size, isSelected);
         }).toList(),
       ),
+    );
+  }
+
+  Widget _buildRelatedProductsRow() {
+    // Get the currently displayed product
+    final currentProduct = widget.product;
+
+    // Filter out the current product from the related products
+    final filteredRelatedProducts =
+        widget.relatedProducts.where((p) => p != currentProduct).toList();
+
+    if (filteredRelatedProducts.isEmpty) {
+      return const Center(
+        child: Text(
+          'No related products found',
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.grey,
+          ),
+        ),
+      );
+    }
+
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 10.0,
+        childAspectRatio: 0.74,
+      ),
+      itemCount: filteredRelatedProducts.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final relatedProduct = filteredRelatedProducts[index];
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetail(
+                  product: relatedProduct,
+                  relatedProducts:
+                      widget.relatedProducts, // Pass all related products
+                ),
+              ),
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.all(0.0),
+            child: Card(
+              color: Colors.white,
+              child: Stack(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: SizedBox(
+                          width: 200,
+                          height: 90,
+                          child: Image.asset(
+                            relatedProduct.imagePath,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(15.0, 5.0, 12.0, 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              relatedProduct.brand,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              relatedProduct.name,
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Text(
+                          '\$${relatedProduct.discountprice}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Text(
+                          '\$${relatedProduct.originalprice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
