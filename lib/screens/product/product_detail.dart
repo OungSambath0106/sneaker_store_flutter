@@ -19,19 +19,74 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetail>
     with TickerProviderStateMixin {
-  String selectedSize = 'EU 38';
+  String selectedSize = '';
+  late double currentOriginalPrice; // Track the current original price
   late TabController _tabController;
+
+  List<BestSellingProduct> filteredRelatedProducts = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    currentOriginalPrice =
+        widget.product.originalprice; // Initialize current price
+  }
+
+  void _updatePrice(String price) {
+    setState(() {
+      // Update currentOriginalPrice based on selected size
+      currentOriginalPrice =
+          double.tryParse(price) ?? widget.product.originalprice;
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _toggleBestSellingFavorite(int index) {
+    setState(() {
+      filteredRelatedProducts[index].isFavorite =
+          !filteredRelatedProducts[index].isFavorite;
+    });
+  }
+
+  void _updateOriginalPrice(String size) {
+    List<String> sizes = [
+      'EU 36',
+      'EU 37',
+      'EU 38',
+      'EU 39',
+      'EU 40',
+      'EU 41',
+      'EU 42',
+      'EU 43',
+      'EU 44',
+      'EU 45'
+    ];
+    List<double> prices = [
+      559.99,
+      599.99,
+      659.99,
+      699.99,
+      759.99,
+      799.99,
+      859.99,
+      899.99,
+      959.99,
+      999.99,
+    ];
+
+    int index = sizes.indexOf(size);
+    if (index != -1) {
+      setState(() {
+        currentOriginalPrice =
+            prices[index]; // Update the current original price
+      });
+    }
   }
 
   @override
@@ -117,8 +172,9 @@ class _ProductDetailState extends State<ProductDetail>
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
+                  // Calculate discount price
                   Text(
-                    "\$${product.discountprice}",
+                    "\$${(currentOriginalPrice * (1 - product.discountPercentage / 100)).toStringAsFixed(2)}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -126,8 +182,9 @@ class _ProductDetailState extends State<ProductDetail>
                     ),
                   ),
                   const SizedBox(width: 8),
+                  // Show current original price
                   Text(
-                    "\$${product.originalprice}",
+                    "\$${currentOriginalPrice.toStringAsFixed(2)}",
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.red,
@@ -143,9 +200,9 @@ class _ProductDetailState extends State<ProductDetail>
                       borderRadius: BorderRadius.circular(10.0),
                       color: Colors.red,
                     ),
-                    child: const Text(
-                      "30% OFF",
-                      style: TextStyle(
+                    child: Text(
+                      "${product.discountPercentage}% OFF",
+                      style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -159,14 +216,17 @@ class _ProductDetailState extends State<ProductDetail>
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: 8,
+                    vertical: 6,
                     horizontal: 12,
                   ),
-                  child: Text(
-                    'Select Size',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 6),
+                    child: Text(
+                      'Select Size',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -218,16 +278,18 @@ class _ProductDetailState extends State<ProductDetail>
     );
   }
 
-  Widget _buildSizeOption(String size, bool isSelected) {
+  Widget _buildSizeOption(String size, String price, bool isSelected) {
     return GestureDetector(
       onTap: () {
         setState(() {
           selectedSize = size; // Update selected size
+          _updateOriginalPrice(size);
+          _updatePrice(price); // Update original price based on selected size
         });
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 4),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: isSelected ? Colors.brown : Colors.white,
@@ -245,14 +307,28 @@ class _ProductDetailState extends State<ProductDetail>
                 ]
               : [],
         ),
-        child: Text(
-          size,
-          style: TextStyle(
-            fontSize: 10,
-            color: isSelected ? Colors.white : Colors.grey[800],
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              size,
+              style: TextStyle(
+                fontSize: 10,
+                color: isSelected ? Colors.white : Colors.grey[800],
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 2),
+            Text(
+              '\$$price',
+              style: TextStyle(
+                fontSize: 12,
+                color: isSelected ? Colors.white : Colors.grey[800],
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
@@ -271,17 +347,37 @@ class _ProductDetailState extends State<ProductDetail>
       'EU 44',
       'EU 45'
     ];
+    List<String> prices = [
+      '559.99',
+      '599.99',
+      '659.99',
+      '699.99',
+      '759.99',
+      '799.99',
+      '859.99',
+      '899.99',
+      '959.99',
+      '999.99',
+    ];
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(
+        vertical: 6,
+        horizontal: 18,
+      ),
       child: Wrap(
-        spacing: 7.0,
+        spacing: 8.0,
         runSpacing: 8.0,
         alignment: WrapAlignment.start,
-        children: sizes.map((size) {
+        children: List<Widget>.generate(sizes.length, (index) {
+          String size = sizes[index];
+          String price = prices[index];
           bool isSelected = size == selectedSize;
-          return _buildSizeOption(size, isSelected);
-        }).toList(),
+          return Container(
+            width: MediaQuery.of(context).size.width / 4 - 16,
+            child: _buildSizeOption(size, price, isSelected),
+          );
+        }),
       ),
     );
   }
@@ -400,6 +496,34 @@ class _ProductDetailState extends State<ProductDetail>
                         ),
                       ),
                     ],
+                  ),
+                  Positioned(
+                    top: 8.0,
+                    right: 12.0,
+                    child: IconButton(
+                      icon: Icon(
+                        relatedProduct.isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: relatedProduct.isFavorite
+                            ? Colors.red
+                            : Colors.grey,
+                      ),
+                      onPressed: () {
+                        _toggleBestSellingFavorite(index);
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    right: 12.0,
+                    bottom: 5.0,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.shopping_cart,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {},
+                    ),
                   ),
                 ],
               ),

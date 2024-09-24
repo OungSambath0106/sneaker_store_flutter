@@ -3,9 +3,9 @@ abstract class BestSellingProduct {
   String get imagePath;
   String get brand;
   String get name;
-  String get size;
-  double get discountprice;
+  String get discountprice; // Change to String for formatted output
   double get originalprice;
+  double get discountPercentage;
   bool get isFavorite;
   set isFavorite(bool value);
 }
@@ -18,20 +18,17 @@ class BestSellingProducts implements BestSellingProduct {
   @override
   final String name;
   @override
-  final String size;
-  @override
-  final double discountprice;
-  @override
   final double originalprice;
+  @override
+  final double discountPercentage;
   bool _isFavorite;
 
   BestSellingProducts({
     required this.imagePath,
     required this.brand,
     required this.name,
-    required this.size,
-    required this.discountprice,
     required this.originalprice,
+    required this.discountPercentage,
     bool isFavorite = false,
   }) : _isFavorite = isFavorite;
 
@@ -42,4 +39,9 @@ class BestSellingProducts implements BestSellingProduct {
   set isFavorite(bool value) {
     _isFavorite = value;
   }
+
+  // Calculate discount price and format it
+  @override
+  String get discountprice => (originalprice * (1 - discountPercentage / 100))
+      .toStringAsFixed(2); // Format to 2 decimal places
 }

@@ -5,7 +5,6 @@ import 'package:flutter_application_1/menu/navigation_menu.dart';
 import 'package:flutter_application_1/model/model_product.dart';
 import 'package:flutter_application_1/screens/home_screen/category/adidas_screen.dart';
 import 'package:flutter_application_1/screens/home_screen/category/nike_screen.dart';
-import 'package:flutter_application_1/screens/notification/notification.dart';
 import 'package:flutter_application_1/screens/product/product_detail.dart';
 import 'package:flutter_application_1/screens/scan_qrcode/scan_qrcode_screen.dart';
 
@@ -59,25 +58,25 @@ class _HomeSreenState extends State<HomeSreen> {
   final List<Product> products = [
     Product(
       imagePath: 'assets/products/nikeshoes1.png',
-      name: 'Nike Air Jordan',
+      name: 'Jordan 1 Retro High Off-White University Blue',
       price: 799.99,
       originalPrice: 899.99,
     ),
     Product(
       imagePath: 'assets/products/nikeshoes2.png',
-      name: 'Nike Air Jordan',
+      name: 'Jordan 1 Retro High Off-White Chicago',
       price: 799.99,
       originalPrice: 899.99,
     ),
     Product(
       imagePath: 'assets/products/adidas3.png',
-      name: 'Adidas',
+      name: 'Adidas Barricade 2016 XJ Unisex Baby Trainers',
       price: 799.99,
       originalPrice: 899.99,
     ),
     Product(
       imagePath: 'assets/products/adidas4.png',
-      name: 'Adidas',
+      name: 'YEEZY BOOST 700 "Waverunner"',
       price: 799.99,
       originalPrice: 899.99,
     ),
@@ -89,113 +88,99 @@ class _HomeSreenState extends State<HomeSreen> {
       imagePath: 'assets/products/nikeshoes1.png',
       brand: 'Nike',
       name: 'Jordan 1 Retro High Off-White University Blue',
-      size: '42',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes2.png',
       brand: 'Nike',
       name: 'Jordan 1 Retro High Off-White Chicago',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas5.png',
       brand: 'Adidas',
       name: 'adidas EQT Running Guidance',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes3.png',
       brand: 'Nike',
       name: 'Nike Dunk Low Pro SB',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas1.png',
       brand: 'Adidas',
       name: 'Yeezy Boost 350 V2',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes4.png',
       brand: 'Nike',
       name: 'Air Jordan 1 Retro Black Toe',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes7.png',
       brand: 'Nike',
       name: 'Air Jordan 1 Retro High Off-White NRG',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas2.png',
       brand: 'Adidas',
       name: 'Adidas EQT Support ADV Primeknit Turbo',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes8.png',
       brand: 'Nike',
       name: 'Nike Air Jordan 1 "Shattered Backboard 1.0"',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas3.png',
       brand: 'Adidas',
       name: 'adidas Barricade 2016 XJ Unisex Baby Trainers',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes5.png',
       brand: 'Nike',
       name: 'Nike Air Force 1 Low Stars White Black',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas4.png',
       brand: 'Adidas',
       name: 'YEEZY BOOST 700 "Waverunner"',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/nikeshoes6.png',
       brand: 'Nike',
       name: 'Nike Dunk Low Celtic (2004)',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
     BestSellingProducts(
       imagePath: 'assets/products/adidas6.png',
       brand: 'Adidas',
       name: 'Adidas NMD_XR1 Primeknit Clear Granite W',
-      size: '40',
-      discountprice: 799.99,
       originalprice: 899.99,
+      discountPercentage: 30.0,
     ),
   ];
 
@@ -262,26 +247,15 @@ class _HomeSreenState extends State<HomeSreen> {
           style: TextStyle(color: AppColors.icon),
         ),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.qr_code),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScanQrcodeScreen(),
-                ),
-              );
-            },
-          ),
           Padding(
-            padding: const EdgeInsets.only(right: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: const Icon(Icons.qr_code),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const NotificationScreen(),
+                    builder: (context) => const ScanQrcodeScreen(),
                   ),
                 );
               },
