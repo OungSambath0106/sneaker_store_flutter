@@ -336,6 +336,8 @@ class _ProductDetailState extends State<ProductDetail>
 
   Widget _buildSizeSelector() {
     List<String> sizes = [
+      'EU 34',
+      'EU 35',
       'EU 36',
       'EU 37',
       'EU 38',
@@ -348,6 +350,8 @@ class _ProductDetailState extends State<ProductDetail>
       'EU 45'
     ];
     List<String> prices = [
+      '459.99',
+      '499.99',
       '559.99',
       '599.99',
       '659.99',

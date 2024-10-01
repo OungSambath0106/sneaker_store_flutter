@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildHeader() {
     return const ListTile(
       leading: CircleAvatar(
-        backgroundImage: NetworkImage('assets/images/chea.png'),
+        backgroundImage: AssetImage('assets/images/chea.png'),
         radius: 30,
       ),
       title: Text('Hi, Chea_Ichigo!'),
@@ -260,7 +260,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         ListTile(
           leading: Image.asset(
-            'assets/icons/trash.png',
+            'assets/icons/Trash.png',
             width: 25.0,
             height: 25.0,
           ),
