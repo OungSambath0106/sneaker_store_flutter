@@ -1,7 +1,9 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/screens/Checkout/checkout_screen.dart';
 import 'package:flutter_application_1/screens/dashboard/dashboard.dart';
+import 'package:flutter_application_1/screens/home_screen/home_sreen.dart';
 
 void main() {
   // className objectName = constructorName([parameter_list]);
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Login User',
+      title: 'The Sneaker Store',
       // home: const LoginUser(),
       home: const Dashboard(),
       theme: ThemeData.light().copyWith(

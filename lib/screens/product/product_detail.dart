@@ -111,169 +111,181 @@ class _ProductDetailState extends State<ProductDetail>
         elevation: 0,
         iconTheme: const IconThemeData(color: AppColors.icon),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Image.asset(
-                product.imagePath,
-                width: MediaQuery.of(context).size.width - 10,
-                height: MediaQuery.of(context).size.width * 0.6,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.brand,
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    product.imagePath,
+                    width: MediaQuery.of(context).size.width - 10,
+                    height: MediaQuery.of(context).size.width * 0.6,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.brand,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              product.name,
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          product.name,
+                      ),
+                      const Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(Icons.star, color: Colors.amber),
+                            SizedBox(width: 4),
+                            Text(
+                              "5.0",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      // Calculate discount price
+                      Text(
+                        "\$${(currentOriginalPrice * (1 - product.discountPercentage / 100)).toStringAsFixed(2)}",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.brown,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      // Show current original price
+                      Text(
+                        "\$${currentOriginalPrice.toStringAsFixed(2)}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.red,
+                          decoration: TextDecoration.lineThrough,
+                          decorationColor: Colors.red,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.red,
+                        ),
+                        child: Text(
+                          "${product.discountPercentage}% OFF",
                           style: const TextStyle(
-                            fontSize: 22,
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                // Integrate TabBarView content here
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 6,
+                        horizontal: 12,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 6),
+                        child: Text(
+                          'Select Size',
+                          style: TextStyle(
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const Expanded(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(Icons.star, color: Colors.amber),
-                        SizedBox(width: 4),
-                        Text(
-                          "5.0",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  // Calculate discount price
-                  Text(
-                    "\$${(currentOriginalPrice * (1 - product.discountPercentage / 100)).toStringAsFixed(2)}",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.brown,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  // Show current original price
-                  Text(
-                    "\$${currentOriginalPrice.toStringAsFixed(2)}",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.red,
-                      decoration: TextDecoration.lineThrough,
-                      decorationColor: Colors.red,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.red,
-                    ),
-                    child: Text(
-                      "${product.discountPercentage}% OFF",
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Integrate TabBarView content here
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 12,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 6),
-                    child: Text(
-                      'Select Size',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ),
-                _buildSizeSelector(),
-                const SizedBox(height: 10),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    "Welcome to dinoclaire.my shop! We provide the best service and the best beauty products. Wholesale please. Welcome to dinoclaire. my shop! We provide the best service and the best beauty products. Wholesale please. See more",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
+                    _buildSizeSelector(),
+                    const SizedBox(height: 10),
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        "Welcome to dinoclaire.my shop! We provide the best service and the best beauty products. Wholesale please. Welcome to dinoclaire. my shop! We provide the best service and the best beauty products. Wholesale please. See more",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                _buildSectionTitle('Related Products', () {}),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child:
-                      _buildRelatedProductsRow(), // Wrap the widget in `child:`
+                    _buildSectionTitle('Related Products', () {}),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: _buildRelatedProductsRow(),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(17, 15, 17, 32),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width / 8,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF683212),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+          ),
+          Positioned(
+            left: 17,
+            right: 17,
+            bottom: 30,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width / 8,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF683212),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                ),
+                onPressed: () {
+                  // Show the success SnackBar
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Added to cart successfully!'),
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'Add to cart',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
+                  );
+                },
+                child: const Text(
+                  'Add to cart',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

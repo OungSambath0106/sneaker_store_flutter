@@ -13,13 +13,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
   final List<NotificationItem> notifications = [
     NotificationItem(
       title: "Promotion",
-      message: "Special Promotion on all products in the Faom 30% off.",
+      message: "Special Promotion on all products in the Nike 30% off.",
       timestamp: DateTime.now().subtract(const Duration(hours: 1)),
       type: NotificationType.promotion,
     ),
     NotificationItem(
       title: "Promotion",
-      message: "Special Promotion on all products in the Faom 30% off.",
+      message: "Special Promotion on all products in the Adidas 30% off.",
       timestamp: DateTime.now().subtract(const Duration(hours: 2)),
       type: NotificationType.promotion,
     ),

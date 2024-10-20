@@ -133,12 +133,15 @@ class _NikeScreenState extends State<NikeScreen> {
           style: TextStyle(color: AppColors.icon),
         ),
         actions: [
-          IconButton(
-            icon: SvgPicture.asset('assets/icons/filter.svg'),
-            onPressed: () {
-              // Your onPressed functionality here
-            },
-          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: SvgPicture.asset('assets/icons/filter.svg'),
+              onPressed: () {
+                // Your onPressed functionality here
+              },
+            ),
+          )
         ],
         iconTheme: const IconThemeData(color: AppColors.icon),
       ),

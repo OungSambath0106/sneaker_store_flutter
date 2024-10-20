@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_application_1/menu/navigation_menu.dart';
 import 'package:flutter_application_1/model/model_product.dart';
 import 'package:flutter_application_1/screens/home_screen/category/adidas_screen.dart';
 import 'package:flutter_application_1/screens/home_screen/category/nike_screen.dart';
+import 'package:flutter_application_1/screens/order/order.dart';
 import 'package:flutter_application_1/screens/product/product_detail.dart';
 import 'package:flutter_application_1/screens/scan_qrcode/scan_qrcode_screen.dart';
 
@@ -248,9 +251,31 @@ class _HomeSreenState extends State<HomeSreen> {
         ),
         actions: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 0.0),
             child: IconButton(
-              icon: const Icon(Icons.qr_code),
+              icon: Image.asset(
+                'assets/icons/invoice.png', // Replace with the second image path
+                width: 24.0, // Set your desired width
+                height: 24.0, // Set your desired height
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OrderHistoryScreen(),
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: Image.asset(
+                'assets/icons/qr-code.png', // Replace with your actual image path
+                width: 24.0, // Set your desired width
+                height: 24.0, // Set your desired height
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -329,10 +354,15 @@ class _HomeSreenState extends State<HomeSreen> {
                 const SizedBox(height: 5),
                 _newArrivalProduct(),
                 const SizedBox(height: 20),
+                _buildSectionTitle('Best Selling', () {}),
+                const SizedBox(height: 5),
+                _bestSellingProduct(),
               ],
-              _buildSectionTitle('Best Selling', () {}),
-              const SizedBox(height: 5),
-              _bestSellingProduct(),
+              if (isSearchActive) ...[
+                const SizedBox(height: 5),
+                _searchProduct(),
+              ],
+              const SizedBox(height: 25),
             ],
           ),
         ),
@@ -407,6 +437,274 @@ class _HomeSreenState extends State<HomeSreen> {
         ),
       );
     }
+
+    return SizedBox(
+      height: 500, // Adjust height as needed to fit two rows
+      child: Column(
+        children: [
+          // First row (first 6 products or fewer)
+          SizedBox(
+            height: 240, // Height for the first row
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount:
+                  min(_filteredProducts.length, 7), // Show up to 7 products
+              itemBuilder: (context, index) {
+                final product = _filteredProducts[index];
+
+                return GestureDetector(
+                  onTap: () => _navigateToProductDetail(product),
+                  child: Container(
+                    width: 180, // Adjust width for each item
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Card(
+                      color: Colors.white,
+                      child: Stack(
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    0.0, 18.0, 0.0, 0),
+                                child: SizedBox(
+                                  width: 300,
+                                  height: 90,
+                                  child: Image.asset(
+                                    product.imagePath,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    15.0, 5.0, 12.0, 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      product.brand,
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
+                                child: Text(
+                                  '\$${product.discountprice}',
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
+                                child: Text(
+                                  '\$${product.originalprice.toStringAsFixed(2)}',
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Positioned(
+                            top: 8.0,
+                            right: 12.0,
+                            child: IconButton(
+                              icon: Icon(
+                                product.isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: product.isFavorite
+                                    ? Colors.red
+                                    : Colors.grey,
+                              ),
+                              onPressed: () {
+                                _toggleBestSellingFavorite(index);
+                              },
+                            ),
+                          ),
+                          Positioned(
+                            right: 12.0,
+                            bottom: 5.0,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.shopping_cart,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 15),
+          // Second row (next set of products, if any)
+          if (_filteredProducts.length > 7)
+            SizedBox(
+              height: 240, // Height for the second row
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _filteredProducts.length - 7, // Remaining products
+                itemBuilder: (context, index) {
+                  final product =
+                      _filteredProducts[index + 7]; // Start from product 7
+
+                  return GestureDetector(
+                    onTap: () => _navigateToProductDetail(product),
+                    child: Container(
+                      width: 180, // Adjust width for each item
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Card(
+                        color: Colors.white,
+                        child: Stack(
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 18.0, 0.0, 0),
+                                  child: SizedBox(
+                                    width: 300,
+                                    height: 90,
+                                    child: Image.asset(
+                                      product.imagePath,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      15.0, 5.0, 12.0, 8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        product.brand,
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Text(
+                                        product.name,
+                                        style: const TextStyle(
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0),
+                                  child: Text(
+                                    '\$${product.discountprice}',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0),
+                                  child: Text(
+                                    '\$${product.originalprice.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      decoration: TextDecoration.lineThrough,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Positioned(
+                              top: 8.0,
+                              right: 12.0,
+                              child: IconButton(
+                                icon: Icon(
+                                  product.isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: product.isFavorite
+                                      ? Colors.red
+                                      : Colors.grey,
+                                ),
+                                onPressed: () {
+                                  _toggleBestSellingFavorite(
+                                      index + 7); // Update index
+                                },
+                              ),
+                            ),
+                            Positioned(
+                              right: 12.0,
+                              bottom: 5.0,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.shopping_cart,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _searchProduct() {
+    if (_filteredProducts.isEmpty) {
+      return const Center(
+        child: Text(
+          'Data not found',
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.grey,
+          ),
+        ),
+      );
+    }
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -465,12 +763,6 @@ class _HomeSreenState extends State<HomeSreen> {
                                   .ellipsis, // Adds an ellipsis when the text overflows
                               maxLines: 1, // Limits the text to a single line
                             ),
-                            // Text(
-                            //   'Size: ${product.size}',
-                            //   style: const TextStyle(
-                            //     color: Colors.grey,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),

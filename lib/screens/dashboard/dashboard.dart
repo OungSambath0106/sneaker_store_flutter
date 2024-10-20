@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_colors.dart';
+import 'package:flutter_application_1/screens/cart/cart.dart';
 import 'package:flutter_application_1/screens/home_screen/home_sreen.dart';
 import 'package:flutter_application_1/screens/notification/notification.dart';
-import 'package:flutter_application_1/screens/order/order.dart';
 import 'package:flutter_application_1/screens/profile/profile.dart';
 
 // Mocking user login status for this example
@@ -22,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
   // Define your screens here
   final List<Widget> _screens = [
     const HomeSreen(),
-    const OrderHistoryScreen(),
+    const CartScreen(),
     const NotificationScreen(),
     const ProfileScreen(),
   ];
